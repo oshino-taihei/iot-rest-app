@@ -1,0 +1,32 @@
+<% import java.time.format.* %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  </head>
+<body>
+  <div class="container">
+    <h1 class="page-header">Dashboard</h1>
+    <h2 class="sub-header"><%= dataList.size() %> Messages</h2>
+    <button type="button" class="btn btn-primary active" onclick="location.href='/messages';">Reload</button>
+    <button type="button" class="btn btn-danger active" onclick="location.href='/messages/clear';">Clear</button>
+    <p># curl host:8080/messages -X POST -d value=message</p>
+    <table class="table table-striped">
+      <thead>
+        <tr><th>#</th><th>Date</th><th>Message</th></tr>
+      </thead>
+      <tbody>
+      <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM) %>
+      <% dataList.eachWithIndex { val,i -> %>
+          <tr><th><%= i+1 %></th><th><%= val['date'].format(f) %></th><th><%= val['value'] %></th></tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
