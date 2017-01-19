@@ -15,15 +15,14 @@
     <h2 class="sub-header"><%= dataList.size() %> Messages</h2>
     <button type="button" class="btn btn-primary active" onclick="location.href='/messages';">Reload</button>
     <button type="button" class="btn btn-danger active" onclick="location.href='/messages/clear';">Clear</button>
-    <p># curl host:8080/messages -X POST -d value=message</p>
     <table class="table table-striped">
       <thead>
-        <tr><th>#</th><th>Date</th><th>Message</th></tr>
+        <tr><th>#</th><th>Date</th><th>Value</th><th>Payload</th></tr>
       </thead>
       <tbody>
       <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.JAPAN) %>
       <% dataList.eachWithIndex { val,i -> %>
-          <tr><th><%= i+1 %></th><th><%= val['date'].format(f) %></th><th><%= val['value'] %></th></tr>
+          <tr><th><%= i+1 %></th><th><%= val['date'].format(f) %></th><th><%= val['value'] %></th><th><%= val['payload'] %></th></tr>
       <% } %>
       </tbody>
     </table>

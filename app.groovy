@@ -1,7 +1,9 @@
+@Grab('groovy-all')
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.concurrent.CopyOnWriteArrayList
 import java.time.*
+import groovy.json.*
 
 @Controller
 class RestApp {
@@ -19,9 +21,15 @@ class RestApp {
   }
   @RequestMapping(value = "/messages", method = RequestMethod.POST)
   @ResponseBody
-  public String create(@RequestParam(required = false) String value) {
-    if (value != null) {
-      dataList.add([date:LocalDateTime.now(), value:value])
+  public String create(@RequestBody String payload) {
+    try{
+      def value = new JsonSlurper().parseText(payload)
+      def cpuTemp = value["payload"]["data"]["cpu-temp"][0]
+      if (cpuTemp) {
+        dataList.add([date:LocalDateTime.now(), value:cpuTemp, payload:payload])
+      }
+    } catch(Exception e) {
+      logger.error(e)
     }
   }
   @RequestMapping(value = "/messages/clear")
