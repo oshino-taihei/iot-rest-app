@@ -21,7 +21,7 @@
         <tr><th>#</th><th>Date</th><th>Message</th></tr>
       </thead>
       <tbody>
-      <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM) %>
+      <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.JAPAN) %>
       <% dataList.eachWithIndex { val,i -> %>
           <tr><th><%= i+1 %></th><th><%= val['date'].format(f) %></th><th><%= val['value'] %></th></tr>
       <% } %>
