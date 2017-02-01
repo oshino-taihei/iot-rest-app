@@ -24,9 +24,12 @@ class RestApp {
   public String create(@RequestBody String payload) {
     try{
       def value = new JsonSlurper().parseText(payload)
-      def cpuTemp = value["payload"]["data"]["cpu-temp"][0]
+      def cpuTemp = value["payload"]["data"]["cpuTemp"][0]
       if (cpuTemp) {
+        logger.info("post request: cpuTemp=[${cpuTemp}]")
         dataList.add([date:LocalDateTime.now(), value:cpuTemp, payload:payload])
+      } else {
+        logger.info("invalid post request: ${payload}")
       }
     } catch(Exception e) {
       logger.error(e)
@@ -34,6 +37,7 @@ class RestApp {
   }
   @RequestMapping(value = "/messages/clear")
   public String clear() {
+    logger.info("CLEAR: clear messages.")
     dataList.clear()
     "redirect:/messages"
   }
