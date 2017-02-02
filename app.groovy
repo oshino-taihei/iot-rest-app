@@ -44,6 +44,15 @@ class RestApp {
     "redirect:/messages"
   }
 
+  @RequestMapping(value = "/messages/dummy")
+  public String dummy() {
+    logger.info("CREATE: dummy messages.")
+    dataList.add([date:Instant.now().toEpochMilli(), value:45, payload:"dummy"])
+    dataList.add([date:Instant.now().plusSeconds(5).toEpochMilli(), value:50, payload:"dummy"])
+    dataList.add([date:Instant.now().plusSeconds(10).toEpochMilli(), value:55, payload:"dummy"])
+    "redirect:/messages"
+  }
+
   private String render(String templateName) {
     def f = new File("view/${templateName}.template")
     def engine = new groovy.text.SimpleTemplateEngine()
