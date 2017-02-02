@@ -1,3 +1,4 @@
+<% import java.time.* %>
 <% import java.time.format.* %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +23,8 @@
       <tbody>
       <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.JAPAN) %>
       <% dataList.eachWithIndex { val,i -> %>
-          <tr><th><%= i+1 %></th><th><%= val['date'].format(f) %></th><th><%= val['value'] %></th><th><%= val['payload'] %></th></tr>
+	  <% ZonedDateTime dateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(val['date'] as Long), ZoneId.of("Asia/Tokyo")); %>
+          <tr><th><%= i+1 %></th><th><%= dateTime.format(f) %></th><th><%= val['value'] %></th><th><%= val['payload'] %></th></tr>
       <% } %>
       </tbody>
     </table>
