@@ -40,16 +40,18 @@
     <h2 class="sub-header"><%= dataList.size() %> Messages</h2>
     <button type="button" class="btn btn-primary active" onclick="location.href='/messages';">Reload</button>
     <button type="button" class="btn btn-danger active" onclick="location.href='/messages/clear';">Clear</button>
+    <h3>Chart</h3>
     <div id="chartContainer" style="height: 300px; width: 80%;"></div>
+    <h3>Message List</h3>
     <table class="table table-striped">
       <thead>
-        <tr><th>#</th><th>Date</th><th>Value</th><th>Payload</th></tr>
+        <tr><th>#</th><th>DateTime</th><th>Value</th></tr>
       </thead>
       <tbody>
       <% def f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.JAPAN) %>
       <% dataList.eachWithIndex { val,i -> %>
 	        <% ZonedDateTime dateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(val['date'] as Long), ZoneId.of("Asia/Tokyo")); %>
-          <tr><th><%= i+1 %></th><th><%= dateTime.format(f) %></th><th><%= val['value'] %></th><th><%= val['payload'] %></th></tr>
+          <tr><th><%= i+1 %></th><th><%= dateTime.format(f) %></th><th><%= val['value'] %></th></tr>
       <% } %>
       </tbody>
     </table>

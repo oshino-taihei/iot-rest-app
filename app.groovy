@@ -28,7 +28,7 @@ class RestApp {
       def cpuTemp = value["payload"]["data"]["cpuTemp"][0]
       if (cpuTemp) {
         logger.info("post request: date=[${sentTime}],cpuTemp=[${cpuTemp}]")
-        dataList.add([date:sentTime, value:cpuTemp, payload:payload])
+        dataList.add([date:sentTime, value:cpuTemp])
       } else {
         logger.info("invalid post request: ${payload}")
       }
@@ -47,9 +47,9 @@ class RestApp {
   @RequestMapping(value = "/messages/dummy")
   public String dummy() {
     logger.info("CREATE: dummy messages.")
-    dataList.add([date:Instant.now().toEpochMilli(), value:45, payload:"dummy"])
-    dataList.add([date:Instant.now().plusSeconds(5).toEpochMilli(), value:50, payload:"dummy"])
-    dataList.add([date:Instant.now().plusSeconds(10).toEpochMilli(), value:55, payload:"dummy"])
+    dataList.add([date:Instant.now().toEpochMilli(), value:45])
+    dataList.add([date:Instant.now().plusSeconds(5).toEpochMilli(), value:50])
+    dataList.add([date:Instant.now().plusSeconds(10).toEpochMilli(), value:55])
     "redirect:/messages"
   }
 
