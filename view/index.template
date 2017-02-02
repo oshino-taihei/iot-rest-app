@@ -15,7 +15,7 @@
       	var chart = new CanvasJS.Chart("chartContainer", {
       		theme: "theme2",
       		title:{
-      			text: "CPU Temparature"
+      			text: "CPU Temperature"
       		},
       		animationEnabled: false,
       		data: [
